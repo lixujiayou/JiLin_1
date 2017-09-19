@@ -1,0 +1,58 @@
+{
+	"login.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"main.html",
+			"pullrefresh_main.html",
+			"siteList_main.html"
+		]
+	},
+	"pullrefresh_main.html": {
+		"resources": [
+			"pullrefresh_sub.html"
+		],
+		"refer": [
+			"pullrefresh_sub.html"
+		]
+	},
+	"pullrefresh_sub.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css"
+		]
+	},
+	"siteList_main.html": {
+		"resources": [
+			"siteList_sub.html"
+		],
+		"refer": [
+			"siteList_sub.html"
+		]
+	},
+	"siteList_sub.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"image/survey_0.png",
+			"image/survey_1.png",
+			"image/survey_5.png"
+		],
+		"refer": [
+			"auditFlow.html"
+		]
+	},
+	"auditFlow.html": {
+		"resources": [
+			"js/mui.js",
+			"css/mui.css",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"image/default_finish.png",
+			"image/finish1.png",
+			"image/unchecked.png"
+		]
+	}
+}

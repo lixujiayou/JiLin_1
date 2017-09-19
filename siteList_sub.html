@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+	</head>
+
+	<body>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div>
+					<!--状态-->
+					<div style="width: 100%;">
+						<span style="width: 30%;">状态:</span>
+						<select id="select_status" style="width: 70%;">
+							<option>---请选择状态---</option>
+							<option>全部</option>
+							<option>未普查</option>
+							<option>已普查</option>
+							<option>确认通过</option>
+							<option>确认不通过</option>
+							<option>一级审核通过</option>
+							<option>一级审核不通过</option>
+							<option>二级审核通过</option>
+							<option>二级审核不通过</option>
+						</select>
+					</div>
+					<!--地市-->
+					<div style="width: 100%;">
+						<span style="width: 30%;">地市:</span>
+						<select id="select_city" style="width: 70%;"></select>
+					</div>
+					<!--区县-->
+					<div style="width: 100%;">
+						<span style="width: 30%;">区县:</span>
+						<select id="select_country" style="width: 70%;"></select>
+					</div>
+					<!--关键字-->
+					<div style="width: 100%;">
+						<span style="width: 25%;">铁塔站址名称:</span>
+						<input id="text_keyWord" style="width: 65%;line-height: 35px;"></input>
+					</div>
+
+					<button id="btn_search" style="width: 100%;">查询</button>
+				</div>
+
+				<!--数据列表-->
+				<ul class="mui-table-view mui-table-view-chevron">
+
+				</ul>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				
+				//getSiteList(0, 10, document.getElementById("text_keyWord").value, "", "");
+							
+			}
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				
+				//getSiteList(0, 10, document.getElementById("text_keyWord").value, "", "");				
+
+				setTimeout(function() {
+					
+				}, 1500);
+			}
+
+			if(mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+					      
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					
+						
+					}, 1000);
+					//TODO  start
+					var wid = null;
+					var status = "";
+					var currentlati;
+					var currentlongti;
+					var cityList;
+					var countryList;
+					var siteList;
+					var cityId = "";
+					var countryId = "";
+					var start = "0";
+					var length = "10";
+					if(!networkAvailable()) {
+						mui.alert("请连接网络");
+					}
+					
+					var select_status = document.getElementById("select_status");
+					var select_city = document.getElementById("select_city");
+					var select_country = document.getElementById("select_country");
+					var text_keyWord = document.getElementById("text_keyWord");
+					var btn_search = document.getElementById("btn_search");
+					getlocation(function(isSuccess) {
+						if(isSuccess) {
+							plus.geolocation.clearWatch(wid);
+							getSiteList(0, 10, status,cityId, countryId, document.getElementById("text_keyWord").value);
+						}
+					});
+
+					getCity();
+					
+                    select_status.addEventListener("change",function(){
+                    	if(select_status.selectedIndex == 0){
+                    		return;
+                    	}
+                    	var index = select_status.selectedIndex - 1;
+                    	status = select_status.options[index].value;
+                    });
+                    
+                    select_city.addEventListener("change", function() {
+						if(select_city.selectedIndex == 0) {
+							return;
+						}
+						cityId = cityList[select_city.selectedIndex - 1].id;
+						getCountry(cityId);
+					});
+                    
+                    select_country.addEventListener("change",function(){
+                    	if(select_country.selectedIndex == 0){
+                    		return;
+                    	}
+                    	var index = select_country.selectedIndex - 1;
+                        countryId = countryList[index].id;
+                    	
+                    });
+                    btn_search.addEventListener("click",function(){
+                    	getSiteList(start, length, status, cityId, countyId ,document.getElementById("text_keyWord").value);
+                    });
+                    /**
+                     * 条目的点击事件
+                     */
+                    mui(".mui-table-view").on("click","li",function(){
+                    	var id =  this.getAttribute("id");
+                    	mui.alert("你点击的id:"+id);
+                        var siteId =  siteList[id].id+"";
+                        var siteNo = siteList[id].phySiteNo;
+                        var siteName = siteList[id].title;
+                        var userRole = siteList[id].userRole;
+                        plus.storage.setItem("siteId",siteId);
+                        plus.storage.setItem("siteNo",siteNo);
+                        plus.storage.setItem("siteName",siteName);
+                        plus.storage.setItem("siteUserRole",userRole);
+                        mui.openWindow("auditFlow.html");
+                        
+                    });
+
+					/**
+					 * 获取状态
+					 */
+					function getCountry(cityId) {
+						var url = plus.storage.getItem("url") + "/costAudit/mobile/reouceCheck/getCounty.do";
+						mui.ajax(url, {
+							type: 'post',
+							dataType: 'json',
+							timeout: 10000 * 60,
+							data: {
+								userId: plus.storage.getItem("userid"),
+								userRole: plus.storage.getItem("userRole"),
+								userAccount: plus.storage.getItem("userAccount"),
+								cityId: cityId,
+							},
+							success: function(response) {
+								var result = JSON.stringify(response);
+								console.log("获取区县列表的返回:" + result);
+								var data = JSON.parse(result);
+								if(true == data.result) {
+								    countryList = data.root;
+									var countryInfo = '<option value="" selected="selected">---请选择区县---</option>';
+									for(var i = 0; i < countryList.length; i++) {
+										countryInfo += "<option>" + countryList[i].text + "</option>";
+									}
+									select_country.innerHTML = countryInfo;
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								console.log("获取区县列表的error:" + xhr.response);
+								console.log("获取区县列表的error:" + xhr.status);
+							}
+						});
+					}
+
+					/**
+					 * 获取地市
+					 */
+					function getCity() {
+						var url = plus.storage.getItem("url") + "/costAudit/mobile/reouceCheck/getCity.do";
+						mui.ajax(url, {
+							type: 'post',
+							dataType: 'json',
+							timeout: 10000 * 60,
+							data: {
+								userId: plus.storage.getItem("userid"),
+								userRole: plus.storage.getItem("userRole"),
+								userAccount: plus.storage.getItem("userAccount"),
+							},
+							success: function(response) {
+								var result = JSON.stringify(response);
+								console.log("获取地市列表的返回:" + result);
+								var data = JSON.parse(result);
+								if(true == data.result) {
+									var cityInfo = '<option  selected="selected">---请选择地市---</option>';
+									cityList = data.root;
+									for(var i = 0; i < data.root.length; i++) {
+										cityInfo += "<option id='" + i + "'>" + data.root[i].text + "</option>";
+									}
+									select_city.innerHTML = cityInfo;
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								console.log("获取地市列表的error:" + xhr.response);
+								console.log("获取地市列表的error:" + xhr.status);
+							}
+						});
+					}
+
+					function getSiteList(start, length, status, cityId, countyId ,keyword) {
+						var url = plus.storage.getItem("url") + "/costAudit/mobile/reouceCheck/getSiteList.do";
+						mui.ajax(url, {
+							type: 'post',
+							dataType: 'json',
+							timeout: 10000 * 60,
+							data: {
+								pageSize: length,
+								start: start,
+								status: status,
+								cityId: cityId,
+								countyId: countyId,
+								siteVal: keyword,
+								longitude: currentlati,
+								latitude: currentlati,
+								userId: plus.storage.getItem("userid"),
+								userRole: plus.storage.getItem("userRole"),
+								userAccount: plus.storage.getItem("userAccount"),
+
+							},
+							success: function(response) {
+								
+								var result = JSON.stringify(response);
+								console.log("获取站址列表的返回:" + result);
+								var data = JSON.parse(result);
+								if(true == data.result) {
+									 siteList = data.root;
+									if(siteList.length <= 0){
+										mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+									}
+									for(var i = 0; i < siteList.length; i++) {
+										var table = document.body.querySelector('.mui-table-view');
+										var cells = document.body.querySelectorAll('.mui-table-view-cell');
+											var li = document.createElement('li');
+											li.className = 'mui-table-view-cell';
+											li.setAttribute("id",i);
+					                     	li.innerHTML = '<a class="mui-navigate-right" >' + siteList[i].title + '<img src="image/survey_'+siteList[i].iconRes+'.png" style=" float: right;"/></a>';
+											table.appendChild(li);
+									}
+									
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								mui('#pullrefresh').pullRefresh().pullupLoading();
+								mui('#pullrefresh').pullRefresh().pulldownLoading();
+								console.log("获取站址列表的error:" + xhr.response);
+								console.log("获取站址列表的error:" + xhr.status);
+							}
+
+						});
+					}
+
+					function getlocation(isSuccess) {
+
+						wid = plus.geolocation.watchPosition(function(p) {
+							currentlati = p.coords.latitude;
+							currentlongti = p.coords.longitude;
+							console.log("Geolocation\nLatitude:" + p.coords.latitude + "\nLongitude:" + p.coords.longitude + "\nAltitude:" + p.coords.altitude);
+							isSuccess(true);
+							/*plus.storage.setItem("latitude", p.coords.latitude);
+							plus.storage.setItem("longitude", p.coords.longitude);*/
+						});
+
+					}
+					/**
+					 * 网络是否可用
+					 */
+					function networkAvailable() {
+						if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+							return false;
+						} else {
+							return true;
+						}
+					}
+					//TODO end
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+
+				});
+			}
+		</script>
+	</body>
+
+</html>

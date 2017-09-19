@@ -1,0 +1,262 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="css/mui.min.css" />
+		<link rel="stylesheet" href="css/mui.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">审核流程</h1>
+		</header>
+
+		<div class="mui-content">
+			<!--  流程步骤图-->
+			<ul class="mui-table-view" style="padding:10px;overflow:hidden;">
+				<!-- 站点信息 -->
+				<li class="mui-table-view-cell" style="float:left; padding:0;margin:4px 0;width:14.2%; text-align:center;">
+					<figure style="float:left;padding:0;margin:0; width:70px;text-align:center;width:100%;font-size:12px;">
+						<img id="img_stateInfo" alt="站址信息" src="image/default_finish.png" style="width: 25px;height: 25px;">
+						<figcaption>站点信息</figcaption>
+					</figure>
+				</li>
+
+				<li class="mui-table-view-cell" style="float:left; padding:0;margin:4px 0;width:14.2%;text-align:center;">
+					<span style="float:left;margin-top:14px;width:100%;">——</span>
+				</li>
+				<!--签到-->
+				<li class="mui-table-view-cell" style="float:left; padding:0;margin:4px 0;width:14.2%;text-align:center;">
+					<figure style="float:left;padding:0;margin:0; width:70px;text-align:center;width:100%;font-size:12px;">
+						<img id="img_sign" alt="签到" src="image/default_finish.png" style="width: 25px;height: 25px;">
+						<figcaption>签到</figcaption>
+					</figure>
+				</li>
+				<li class="mui-table-view-cell" style="float:left; padding:0;margin:4px 0;width:14.2%;text-align:center;">
+					<span style="float:left;margin-top:14px;width:100%;">——</span>
+				</li>
+				<!--机房及配套-->
+				<li class="mui-table-view-cell" style="float:left; padding:0;margin:4px 0;width:14.2%;text-align:center;">
+					<figure style="float:left;padding:0;margin:0; width:70px;text-align:center;width:100%;font-size:12px;">
+						<img id="img_room" alt="机房及配套" src="image/default_finish.png" style="width: 25px;height: 25px;">
+						<figcaption>机房及配套</figcaption>
+					</figure>
+				</li>
+				<li class="mui-table-view-cell" style="float:left; padding:0;margin:4px 0;width:14.2%;text-align:center;">
+					<span style="float:left;margin-top:14px;width:100%;">——</span>
+				</li>
+				<!--铁塔信息-->
+				<li class="mui-table-view-cell" style="float:left; padding:0;margin:4px 0;width:14.2%;text-align:center;">
+					<figure style="float:left;padding:0;margin:0; width:70px;text-align:center;width:100%;font-size:12px;">
+						<img id="img_tower" alt="铁塔信息" src="image/default_finish.png" style="width: 25px;height: 25px;">
+						<figcaption>铁塔信息</figcaption>
+					</figure>
+				</li>
+				<!-- 右侧竖线 -->
+				<li class="mui-table-view-cell" style="float:right; padding:0;margin:4px 0;width:100%;text-align:right;">
+					<span style="margin-right:25px;">|</span>
+				</li>
+				<!-- 第二行 -->
+				<!--一级审核-->
+				<li class="mui-table-view-cell" style="float:left; padding:0;margin:4px 0;width:14.2%;text-align:center;">
+					<figure style="float:left;padding:0;margin:0; width:70px;text-align:center;width:100%;font-size:12px;">
+						<img id="img_oneAudit" alt="一级审核" src="image/default_finish.png" style="width: 25px;height: 25px;">
+						<figcaption>一级审核</figcaption>
+					</figure>
+				</li>
+				<li class="mui-table-view-cell" style="float:left; padding:0;margin:4px 0;width:14.2%;text-align:center;">
+					<span style="float:left;margin-top:14px;width:100%;">——</span>
+				</li>
+				<!--任务确认-->
+				<li class="mui-table-view-cell" style="float:left; padding:0;margin:4px 0;width:14.2%;text-align:center;">
+					<figure style="float:left;padding:0;margin:0; width:70px;text-align:center;width:100%;font-size:12px;">
+						<img id="img_taskConfirm" alt="任务确认" src="image/default_finish.png" style="width: 25px;height: 25px;">
+						<figcaption>任务确认</figcaption>
+					</figure>
+				</li>
+				<li class="mui-table-view-cell" style="float:left; padding:0;margin:4px 0;width:14.2%;text-align:center;">
+					<span style="float:left;margin-top:14px;width:100%;">——</span>
+				</li>
+				<!--任务提交-->
+				<li class="mui-table-view-cell" style="float:left; padding:0;margin:4px 0;width:14.2%;text-align:center;">
+					<figure style="float:left;padding:0;margin:0; width:70px;text-align:center;width:100%;font-size:12px;">
+						<img id="img_taskSubmit" alt="任务提交" src="image/default_finish.png" style="width: 25px;height: 25px;">
+						<figcaption>任务提交</figcaption>
+					</figure>
+				</li>
+				<li class="mui-table-view-cell" style="float:left; padding:0;margin:4px 0;width:14.2%;text-align:center;">
+					<span style="float:left;margin-top:14px;width:100%;">——</span>
+				</li>
+				<!--远程信息-->
+				<li class="mui-table-view-cell" style="float:left; padding:0;margin:4px 0;width:14.2%;text-align:center;">
+					<figure style="float:left;padding:0;margin:0; width:70px;text-align:center;width:100%;font-size:12px;">
+						<img id="img_remote" alt="远程信息" src="image/default_finish.png" style="width: 25px;height: 25px;">
+						<figcaption>远程信息</figcaption>
+					</figure>
+				</li>
+				<!-- 左侧竖线 -->
+				<li class="mui-table-view-cell" style="float:left; padding:0;margin:4px 0;width:100%;text-align:left;">
+					<span style="margin-left:25px;">|</span>
+				</li>
+				<!-- 第三行 -->
+				<!--二级审核-->
+				<li class="mui-table-view-cell" style="float:left; padding:0;margin:4px 0;width:14.2%;text-align:center;">
+					<figure style="float:left;padding:0;margin:0; width:70px;text-align:center;width:100%;font-size:12px;">
+						<img id="img_twoAudit" alt="二级审核" src="image/default_finish.png" style="width: 25px;height: 25px;">
+						<figcaption>二级审核</figcaption>
+					</figure>
+				</li>
+			</ul>
+			<!--流程列表-->
+			<ul id="processDIV" class="mui-table-view mui-scroll">
+			</ul>
+		</div>
+
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<script>
+			(function($, doc) {
+				var siteId;
+				var siteNo;
+				var siteName;
+				var siteUserRole;
+				var mCurrentWebView;
+				if(window.plus) {
+					plusReady();
+				} else {
+					document.addEventListener('plusready', plusReady, false);
+				}
+
+				function plusReady() {
+					if(!networkAvailable()) {
+						mui.alert("请连接网络");
+					}
+					mCurrentWebView = plus.webview.currentWebview();
+					siteId = plus.storage.getItem("siteId");
+					siteNo = plus.storage.getItem("siteNo");
+					siteName = plus.storage.getItem("siteName");
+					siteUserRole = plus.storage.getItem("siteUserRole");
+					console.log("审核流程siteId:" + siteId + "==siteNo:" + siteNo + "==siteName:" + siteName + "==siteUserRole:" + siteUserRole + "==userId:" + plus.storage.getItem("userid"));
+					getData();
+					
+                    //下拉的操作
+					mCurrentWebView.setPullToRefresh({
+						support: true,
+						height: '50px',
+						range: '100px',
+						style: 'circle',
+						offset: '1px'
+					}, pulldownRefresh);
+					/**
+					 * 事件的点击操作
+					 */
+					mui(".mui-scroll").on("click","li",function(){
+						var id = this.getAttribute("id");
+						mui.alert("弹出的id:"+id);
+					});
+				}
+				/**
+				 * 获取详情信息
+				 */
+				function getData() {
+					var url = plus.storage.getItem("url") + "/costAudit/mobile/reouceCheck/getCheckProgress.do";
+					mui.ajax(url, {
+						type: 'post',
+						dataType: 'json',
+						timeout: 10000 * 60,
+						data: {
+							pageSize: "50",
+							start: "0",
+							userId: plus.storage.getItem("userid"),
+							phySiteNo: plus.storage.getItem("siteNo"),
+							id: plus.storage.getItem("siteId"),
+							userRole: plus.storage.getItem("siteUserRole")
+						},
+						success: function(response) {
+							var result = JSON.stringify(response);
+							console.log("审核流程获取成功:" + result);
+							var data = JSON.parse(result);
+							if(true == data.result) {
+								var processDIV = document.getElementById("processDIV");
+								var processList = data.root;
+								var processInfo = "";
+								for(var i = 0; i < processList.length; i++) {
+									if("1" == processList[i].iconRes) {
+										//流程步骤图
+										if("站址信息" == processList[i].title) {
+											document.getElementById("img_stateInfo").src = "image/finish1.png";
+											document.getElementById("img_sign").src = "image/finish1.png";
+										}
+										if("机房及配套" == processList[i].title) {
+											document.getElementById("img_room").src = "image/finish1.png";
+										}
+										if("铁塔信息" == processList[i].title) {
+											document.getElementById("img_tower").src = "image/finish1.png";
+										}
+										if("远程普查" == processList[i].title) {
+											document.getElementById("img_remote").src = "image/finish1.png";
+										}
+										if("确认结果" == processList[i].title) {
+											document.getElementById("img_taskSubmit").src = "image/finish1.png";
+										}
+										if("一级审核结果" == processList[i].title) {
+											document.getElementById("img_oneAudit").src = "image/finish1.png";
+										}
+										if("二级审核结果" == processList[i].title) {
+											document.getElementById("img_twoAudit").src = "image/finish1.png";
+										}
+										//流程列表
+										processInfo += "<li class='mui-table-view-cell' id='"+i+"'><div style='float: left;'>" +
+											processList[i].title + "</div><div style='float: right;'><img src='image/finish1.png' style='width: 25px;height: 25px;'/><span>" +
+											processList[i].msg + "</span></div></li>";
+									} else {
+										//流程列表
+										processInfo += "<li class='mui-table-view-cell' id='"+i+"'><div style='float: left;'>" +
+											processList[i].title + "</div><div style='float: right;'><img src='image/unchecked.png' style='width: 25px;height: 25px;'/><span>" +
+											processList[i].msg + "</span></div></li>";
+									}
+								}
+								processDIV.innerHTML = processInfo;
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							console.log("审核流程的error:" + xhr.response);
+							console.log("审核流程的error:" + xhr.status);
+						}
+
+					});
+				}
+
+				/**
+				 * 下拉刷新具体业务实现
+				 */
+				function pulldownRefresh() {
+					setTimeout(function() {
+						getData();
+						mCurrentWebView.endPullToRefresh();
+					}, 1500);
+				}
+
+				/**
+				 * 网络是否可用
+				 */
+				function networkAvailable() {
+					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+						return false;
+					} else {
+						return true;
+					}
+				}
+
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

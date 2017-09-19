@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">站址列表</h1>
+		</header>
+		<div class="mui-content">
+			<!--状态-->
+			<div style="width: 100%;">
+				<span style="width: 30%;">状态:</span>
+				<select id="select_status" style="width: 70%;"></select>
+			</div>
+			<!--地市-->
+			<div style="width: 100%;">
+				<span style="width: 30%;">地市:</span>
+				<select id="select_city" style="width: 70%;"></select>
+			</div>
+			<!--区县-->
+			<div style="width: 100%;">
+				<span style="width: 30%;">区县:</span>
+				<select id="select_country" style="width: 70%;"></select>
+			</div>
+			<!--关键字-->
+			<div style="width: 100%;">
+				<span style="width: 30%;">铁塔站址名称:</span>
+				<input id="text_keyWord" style="width: 70%;"></input>
+			</div>
+
+			<button id="btn_search" style="width: 100%;">查询</button>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<script>
+			(function($, doc) {
+
+                 var mCurrentWebView;
+                 
+				if(window.plus) {
+					plusReady();
+				} else {
+					
+				}
+
+				function plusReady() {
+					if(!networkAvailable()) {
+						mui.alert("请连接网络");
+					}
+					
+					mCurrentWebView = plus.webview.currentWebview();
+					var select_status = document.getElementById("select_status");
+					var select_city =  document.getElementById("select_city");
+					var select_country =  document.getElementById("select_country");
+                    var text_keyWord = document.getElementById("text_keyWord");
+                    var btn_search = document.getElementById("btn_search");
+				      
+				   
+				
+				}
+
+				/**
+				 * 网络是否可用
+				 */
+				function networkAvailable() {
+					if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+						return false;
+					} else {
+						return true;
+					}
+				}
+
+			}(mui, document));
+		</script>
+	</body>
+
+</html>
